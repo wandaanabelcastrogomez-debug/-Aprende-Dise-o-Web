@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprende Diseño Web</title>
+<style>
+:root{--bg:#f5f3ff;--panel:#fff;--ink:#241b35;--muted:#6f6680;--primary:#7045b5;--primary2:#8d67d0;--line:#e8e1f2;--good:#18794e;--bad:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,Segoe UI,Arial}
+header{background:linear-gradient(120deg,#4c2b83,#8d67d0);color:white;padding:25px max(20px,calc((100% - 1120px)/2))}
+header h1{margin:0;font-size:clamp(25px,4vw,36px)}header p{margin:5px 0 0;color:#eee5ff}
+.layout{max-width:1120px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:245px 1fr;gap:20px}
+aside,.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 20px #33204a0b}
+aside{padding:16px;height:max-content;position:sticky;top:15px}
+aside h3{margin:4px 8px 12px;font-size:15px;color:var(--muted)}
+.nav{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;color:var(--ink);cursor:pointer;margin:3px 0;font:inherit}
+.nav:hover,.nav.active{background:#f0eaff;color:var(--primary);font-weight:700}
+.progress{height:9px;background:#eee9f5;border-radius:20px;overflow:hidden;margin:8px 0}.progress span{display:block;height:100%;background:var(--primary);width:0;transition:.25s}
+main{min-width:0}.panel{padding:clamp(18px,3vw,30px);margin-bottom:18px}
+.eyebrow{color:var(--primary);font-weight:800;text-transform:uppercase;font-size:12px;letter-spacing:1px}
+h2{margin:5px 0 12px;font-size:27px}h3{margin-top:22px}.muted{color:var(--muted)}
+.tip{background:#f3efff;border-left:4px solid var(--primary);padding:13px 15px;border-radius:8px;margin:16px 0}
+code,pre{font-family:Consolas,monospace}pre{background:#201b2b;color:#f5edff;padding:16px;border-radius:10px;overflow:auto;white-space:pre-wrap}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+button.primary,button.secondary{border:0;border-radius:10px;padding:11px 17px;font-weight:700;cursor:pointer;font:inherit}
+button.primary{background:var(--primary);color:white}button.primary:hover{background:#56318f}
+button.secondary{background:#eee8f7;color:#4e3675}
+button:disabled{opacity:.45;cursor:not-allowed}
+.quiz-option{display:block;width:100%;text-align:left;padding:12px;margin:9px 0;border:1px solid var(--line);border-radius:10px;background:white;cursor:pointer;font:inherit}
+.quiz-option:hover{border-color:var(--primary)}.feedback{padding:12px;border-radius:9px;margin-top:12px}
+.good{background:#e9f7ef;color:var(--good)}.bad{background:#fff0ee;color:var(--bad)}
+.editor{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+textarea{width:100%;min-height:210px;resize:vertical;background:#201b2b;color:#f7efff;border:0;border-radius:10px;padding:14px;font:14px/1.5 Consolas,monospace}
+iframe{width:100%;height:300px;border:1px solid var(--line);border-radius:10px;background:white}
+label{display:block;font-weight:700;margin:10px 0 6px}
+footer{text-align:center;color:var(--muted);padding:12px 20px 35px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}aside{position:static}.editor{grid-template-columns:1fr}.nav{display:inline-block;width:auto}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎨 Aprende Diseño Web</h1>
+  <p>Tu aula práctica para aprender HTML, CSS y JavaScript desde cero.</p>
+</header>
+<div class="layout">
+<aside>
+  <h3>MI RUTA DE APRENDIZAJE</h3>
+  <div class="progress"><span id="progressBar"></span></div>
+  <small id="progressText" class="muted">0 de 9 lecciones completadas</small>
+  <div style="height:12px"></div>
+  <button class="nav active" data-page="inicio">🏠 Inicio</button>
+  <button class="nav" data-page="html">🧱 1. HTML</button>
+  <button class="nav" data-page="css">🎨 2. CSS</button>
+  <button class="nav" data-page="js">⚡ 3. JavaScript</button>
+  <button class="nav" data-page="practica">💻 Practica tu código</button>
+  <button class="nav" data-page="quiz">📝 Examen</button>
+  <button class="nav" data-page="glosario">📚 Glosario</button>
+</aside>
+<main id="content"></main>
+</div>
+<footer>Aprende paso a paso. Practica, equivócate y vuelve a intentarlo. 💜</footer>
+<script>
+const lessons={
+html:{title:"HTML: la estructura de tu página",tag:"MÓDULO 1 · HTML",intro:"HTML significa HyperText Markup Language. Se utiliza para organizar el contenido de una página: títulos, párrafos, imágenes, enlaces, listas y formularios.",sections:[
+["¿Qué es una etiqueta?","Una etiqueta indica qué tipo de contenido estás escribiendo. Muchas tienen apertura y cierre: <code>&lt;p&gt;</code> abre un párrafo y <code>&lt;/p&gt;</code> lo cierra."],
+["Etiquetas esenciales","<code>&lt;h1&gt;</code> título principal · <code>&lt;h2&gt;</code> subtítulo · <code>&lt;p&gt;</code> párrafo · <code>&lt;a&gt;</code> enlace · <code>&lt;img&gt;</code> imagen · <code>&lt;ul&gt;</code> lista · <code>&lt;li&gt;</code> elemento de lista · <code>&lt;button&gt;</code> botón."],
+["Estructura básica","Todo documento HTML suele incluir DOCTYPE, html, head y body. En head van los datos de la página; en body va lo que ve la persona."]
+],example:'<!DOCTYPE html>\n<html lang="es">\n<head>\n  <meta charset="UTF-8">\n  <title>Mi primera página</title>\n</head>\n<body>\n  <h1>¡Hola, mundo!</h1>\n  <p>Estoy aprendiendo HTML.</p>\n</body>\n</html>'},
+css:{title:"CSS: dale estilo a tu página",tag:"MÓDULO 2 · CSS",intro:"CSS significa Cascading Style Sheets. Sirve para cambiar colores, tamaños, espacios, bordes y la distribución de los elementos.",sections:[
+["¿Cómo se escribe CSS?","Una regla CSS tiene un selector y varias declaraciones. El selector elige el elemento; las propiedades indican qué cambiar."],
+["Propiedades comunes","<code>color</code> cambia el color del texto; <code>background-color</code> el fondo; <code>font-size</code> el tamaño; <code>text-align</code> la alineación; <code>border</code> el borde; <code>padding</code> el espacio interior."],
+["Clases e identificadores","Una clase se escribe en CSS con punto, por ejemplo <code>.tarjeta</code>. Un identificador se escribe con numeral, por ejemplo <code>#principal</code>."]
+],example:'body {\n  background-color: #f5f0ff;\n  font-family: Arial;\n}\nh1 {\n  color: purple;\n  text-align: center;\n}\n.tarjeta {\n  background-color: white;\n  padding: 20px;\n  border-radius: 12px;\n}'},
+js:{title:"JavaScript: haz que tu página funcione",tag:"MÓDULO 3 · JAVASCRIPT",intro:"JavaScript agrega interactividad. Puede responder a clics, validar formularios, calcular precios y cambiar el contenido de una página.",sections:[
+["Variables","Usa <code>let</code> cuando el valor puede cambiar y <code>const</code> cuando no necesitas reasignarlo. Ejemplo: <code>let precio = 100;</code>."],
+["Funciones","Una función agrupa instrucciones que puedes ejecutar cuando las necesites: <code>function saludar(){ alert('¡Hola!'); }</code>."],
+["Eventos","Un evento ocurre cuando alguien hace algo, como pulsar un botón. Puedes escuchar un clic con <code>addEventListener('click', ...)</code>."]
+],example:"const boton = document.querySelector('#saludar');\nboton.addEventListener('click', function() {\n  alert('¡Hola! Ya estás usando JavaScript.');\n});"}
+};
+const pages={
+inicio:`<section class="panel"><div class="eyebrow">BIENVENIDA</div><h2>¡Comienza a crear páginas web!</h2><p>En esta aplicación aprenderás los tres lenguajes principales del desarrollo web. No necesitas experiencia previa: estudia una lección, observa el ejemplo y practica.</p><div class="tip"><b>Recuerda:</b> HTML crea la estructura, CSS le da presentación y JavaScript agrega comportamiento.</div><div class="actions"><button class="primary" onclick="showPage('html')">Comenzar con HTML →</button></div></section>
+<section class="panel"><h3>Tu camino de aprendizaje</h3><p>🧱 <b>HTML</b> — organiza títulos, textos, imágenes y enlaces.</p><p>🎨 <b>CSS</b> — diseña colores, tamaños y distribución.</p><p>⚡ <b>JavaScript</b> — crea botones, acciones y funciones.</p><p>💻 <b>Práctica</b> — escribe código y observa el resultado.</p><p>📝 <b>Examen</b> — comprueba lo que has aprendido.</p></section>`,
+practica:`<section class="panel"><div class="eyebrow">LABORATORIO</div><h2>Practica tu código</h2><p>Modifica el código HTML y CSS y pulsa <b>Ejecutar</b> para ver tu página. Prueba cambiar el título, el color y el texto.</p><div class="editor"><div><label for="htmlCode">Código HTML</label><textarea id="htmlCode" spellcheck="false"><h1>Mi primera página</h1>\n<p>Estoy aprendiendo diseño web.</p>\n<button id="saludo">Haz clic aquí</button></textarea><label for="cssCode">Código CSS</label><textarea id="cssCode" spellcheck="false">body { font-family: Arial; text-align: center; padding: 25px; }\nh1 { color: purple; }\nbutton { background: purple; color: white; padding: 10px 16px; border: 0; border-radius: 8px; }</textarea><label for="jsCode">Código JavaScript</label><textarea id="jsCode" spellcheck="false">document.querySelector('#saludo').addEventListener('click', () => {\n  alert('¡Excelente trabajo!');\n});</textarea><div class="actions"><button class="primary" onclick="runCode()">▶ Ejecutar</button><button class="secondary" onclick="resetCode()">Restablecer ejemplo</button></div></div><div><label>Vista previa de tu página</label><iframe id="preview" title="Vista previa del código"></iframe><p class="muted">La vista previa se actualiza al pulsar Ejecutar. El código se ejecuta dentro de esta vista previa.</p></div></div></section>`,
+quiz:`<section class="panel"><div class="eyebrow">COMPRUEBA LO APRENDIDO</div><h2>Examen básico de diseño web</h2><p>Responde las cinco preguntas. Al terminar verás tu puntuación.</p><div id="quizArea"></div></section>`,
+glosario:`<section class="panel"><div class="eyebrow">CONSULTA RÁPIDA</div><h2>Glosario de diseño web</h2><p><b>Etiqueta:</b> instrucción HTML que define un elemento.</p><p><b>Atributo:</b> información adicional dentro de una etiqueta, como <code>src</code> o <code>href</code>.</p><p><b>Selector:</b> indica a qué elementos se aplican los estilos CSS.</p><p><b>Propiedad:</b> característica visual que se modifica en CSS.</p><p><b>Variable:</b> espacio con nombre donde JavaScript guarda un valor.</p><p><b>Función:</b> conjunto de instrucciones que realiza una tarea.</p><p><b>Evento:</b> acción detectada por la página, como un clic.</p></section>`
+};
+let completed=JSON.parse(localStorage.getItem('webLearnDone')||'[]');
+function updateProgress(){document.getElementById('progressBar').style.width=(completed.length/9*100)+'%';document.getElementById('progressText').textContent=completed.length+' de 9 lecciones completadas';}
+function markDone(id){if(!completed.includes(id)){completed.push(id);localStorage.setItem('webLearnDone',JSON.stringify(completed));updateProgress();}}
+function showPage(page){
+ document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ const root=document.getElementById('content');
+ if(lessons[page]){
+  const l=lessons[page];
+  root.innerHTML=`<section class="panel"><div class="eyebrow">${l.tag}</div><h2>${l.title}</h2><p>${l.intro}</p>${l.sections.map((s,i)=>`<h3>${i+1}. ${s[0]}</h3><p>${s[1]}</p>`).join('')}<h3>Ejemplo de código</h3><pre></pre><div class="actions"><button class="primary" id="doneBtn">Marcar lección como completada ✓</button><button class="secondary" onclick="showPage('${page==='html'?'css':page==='css'?'js':'practica'}')">Continuar →</button></div></section>`;
+  root.querySelector('pre').textContent=l.example;
+  document.getElementById('doneBtn').onclick=()=>{markDone(page);document.getElementById('doneBtn').textContent='Lección completada ✓';};
+  if(completed.includes(page))document.getElementById('doneBtn').textContent='Lección completada ✓';
+ }else{
+  root.innerHTML=pages[page]||pages.inicio;
+  if(page==='quiz')buildQuiz();
+  if(page==='practica')runCode();
+ }
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+const questions=[
+{q:'¿Para qué se utiliza HTML?',a:['Para estructurar el contenido','Para crear bases de datos','Para editar fotografías'],c:0,e:'HTML organiza el contenido de la página.'},
+{q:'¿Qué lenguaje se utiliza principalmente para los estilos?',a:['JavaScript','CSS','HTML'],c:1,e:'CSS controla la presentación visual.'},
+{q:'¿Qué etiqueta crea un párrafo?',a:['<h1>','<img>','<p>'],c:2,e:'La etiqueta p representa un párrafo.'},
+{q:'¿Qué lenguaje permite responder a un clic?',a:['JavaScript','CSS','HTML solamente'],c:0,e:'JavaScript permite programar interacciones.'},
+{q:'¿Qué propiedad CSS cambia el color del texto?',a:['background-color','color','font-size'],c:1,e:'La propiedad color cambia el color de las letras.'}
+];
+function buildQuiz(){
+ let index=0,score=0,answered=false;const area=document.getElementById('quizArea');
+ function draw(){
+  if(index>=questions.length){area.innerHTML=`<h3>¡Examen terminado!</h3><h2>${score} de ${questions.length} respuestas correctas</h2><p>${score>=4?'¡Muy bien! Sigue practicando.':'Vuelve a repasar las lecciones e inténtalo otra vez.'}</p><button class="primary" onclick="buildQuiz()">Repetir examen</button>`;if(score>=4)markDone('quiz');return;}
+  const q=questions[index];answered=false;
+  area.innerHTML=`<p class="muted">Pregunta ${index+1} de ${questions.length}</p><h3>${q.q}</h3><div>${q.a.map((a,i)=>`<button class="quiz-option" data-i="${i}">${String.fromCharCode(65+i)}. ${a.replaceAll('<','&lt;').replaceAll('>','&gt;')}</button>`).join('')}</div><div id="feedback"></div><div class="actions"><button class="primary" id="next" disabled>${index===questions.length-1?'Ver resultado':'Siguiente pregunta'}</button></div>`;
+  area.querySelectorAll('.quiz-option').forEach(btn=>btn.onclick=()=>{if(answered)return;answered=true;const ok=Number(btn.dataset.i)===q.c;if(ok)score++;area.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);document.getElementById('feedback').className='feedback '+(ok?'good':'bad');document.getElementById('feedback').textContent=(ok?'¡Correcto! ':'No es correcto. ')+q.e;document.getElementById('next').disabled=false;});
+  document.getElementById('next').onclick=()=>{index++;draw();};
+ }
+ draw();
+}
+function runCode(){
+ const h=document.getElementById('htmlCode'),c=document.getElementById('cssCode'),j=document.getElementById('jsCode');if(!h)return;
+ const doc='<!doctype html><html lang="es"><head><meta charset="utf-8"><style>'+c.value+'</style></head><body>'+h.value+'<script>'+j.value.replace(/<\/script/gi,'<\\/script')+'<\/script></body></html>';
+ document.getElementById('preview').srcdoc=doc;
+}
+function resetCode(){document.getElementById('htmlCode').value='<h1>Mi primera página</h1>\n<p>Estoy aprendiendo diseño web.</p>\n<button id="saludo">Haz clic aquí</button>';document.getElementById('cssCode').value='body { font-family: Arial; text-align: center; padding: 25px; }\nh1 { color: purple; }\nbutton { background: purple; color: white; padding: 10px 16px; border: 0; border-radius: 8px; }';document.getElementById('jsCode').value="document.querySelector('#saludo').addEventListener('click', () => {\n  alert('¡Excelente trabajo!');\n});";runCode();}
+updateProgress();showPage('inicio');
+</script>
+</body>
+</html>
